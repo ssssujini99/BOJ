@@ -40,6 +40,9 @@ int stack::top(){
 }
 
 int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
     stack s;
     int n;
     cin>>n;
