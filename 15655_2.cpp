@@ -1,27 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int n, m;
+int ch[10001]={0, }; // 중복 여부 확인 배열
+int res[9]={0, }; // 결과 배열
 vector<int> v;
-int res[9]={0, };
-int ch[10001]={0, };
-int n, m, s=0;
 
-void DFS(int cnt){
-  if(cnt==m+1){
-    for(int i=1; i<=m; i++){
-      cout<<res[i]<<" ";
+void DFS(int idx, int cnt){
+  if(cnt==m){
+    for(int i=0; i<n; i++){
+      if(ch[i]) cout<<v[i]<<" ";
     }
     cout<<"\n";
   }
+  else if(idx>=n) return;
   else{
-    for(int i=0; i<n; i++){
-      if(!ch[v[i]] && res[cnt-1]<v[i]){
-        res[cnt]=v[i];
-        ch[v[i]]=1;
-        DFS(cnt+1);
-        ch[v[i]]=0;
-      }
-    }
+    ch[idx]=1;
+    DFS(idx+1, cnt+1);
+    ch[idx]=0;
+    DFS(idx+1, cnt);
   }
 }
 
@@ -30,11 +27,12 @@ int main() {
     cin.tie(nullptr);
 
     cin>>n>>m;
-    int tmp;
-    for(int i=1; i<=n; i++){
-      cin>>tmp; v.push_back(tmp);
+    for(int i=0; i<n; i++){
+      int tmp; cin>>tmp;
+      v.push_back(tmp);
     }
     sort(v.begin(), v.end());
-    DFS(1);
+    DFS(0, 0);
+
     return 0;
 }
